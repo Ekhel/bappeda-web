@@ -1,3 +1,2 @@
+from tokenize import blank_re
 from django.db import models
-
-# Create your models here.
