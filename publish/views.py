@@ -3,5 +3,5 @@ from django.shortcuts import render, redirect
 
 
 def beranda(request):
-    context = {'title': 'Badan Perencanaan Pembangunan Daerah'}
+    context = {'title': 'Beranda | Bappeda Kab. Jayapura'}
     return render(request, 'home.html', context)
