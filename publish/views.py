@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from multiprocessing import context
+from django.shortcuts import render, redirect
 
-# Create your views here.
+
+def beranda(request):
+    context = {'title': 'Badan Perencanaan Pembangunan Daerah'}
+    return render(request, 'home.html', context)
