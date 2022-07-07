@@ -1,5 +1,5 @@
-from pathlib import Path
 import django_heroku
+from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -139,6 +139,8 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+django_heroku.settings(locals())
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -146,5 +148,3 @@ ADMIN_SITE_HEADER = "BAPPEDA"
 ADMIN_SITE_INDEX = "Login Adminnistrator"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-django_heroku.settings(locals())
