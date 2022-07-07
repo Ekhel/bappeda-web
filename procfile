@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath web.wsgi --log-file -
+web: gunicorn bappeda.wsgi --log-file -
