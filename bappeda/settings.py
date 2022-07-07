@@ -1,4 +1,5 @@
 from pathlib import Path
+import django_heroku
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -145,3 +146,5 @@ ADMIN_SITE_HEADER = "BAPPEDA"
 ADMIN_SITE_INDEX = "Login Adminnistrator"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
