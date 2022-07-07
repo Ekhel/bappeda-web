@@ -131,4 +131,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
+ADMIN_SITE_HEADER = "BAPPEDA"
+ADMIN_SITE_INDEX = "Login Adminnistrator"
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
