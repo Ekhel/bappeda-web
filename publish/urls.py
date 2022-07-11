@@ -4,5 +4,6 @@ from . import views
 urlpatterns = [
     # path('', views.beranda, name="beranda"),
     path('', views.kategori, name="kategori"),
-    path('/<str:pk>/', views.produk, name="produk"),
+    path('dokumen/<str:pk>/', views.produk, name="produk"),
+    path('aplikasi/', views.applikasi, name="aplikasi"),
 ]
