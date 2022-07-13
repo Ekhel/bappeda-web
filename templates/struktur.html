@@ -5,6 +5,13 @@
 <div class="hero-section app-hero">
     <div class="container">
         <div class="hero-content app-hero-content text-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'beranda' %}">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="#">Struktur</a>
+                    </li>
+                </ol>
+            </nav>
             <div class="row justify-content-md-center">
                 <div class="col-md-10">
                     <h1 class="wow fadeInUp" data-wow-delay="0s">STRUKTUR</h1>
@@ -85,7 +92,7 @@
         function textStyle(field) {
             return [
                 {
-                    font: "8px Roboto, sans-serif", stroke: "rgba(0, 0, 0, .60)",
+                    font: "10px Roboto, sans-serif", stroke: "rgba(0, 0, 0, .60)",
                     visible: false  // only show textblocks when there is corresponding data for them
                 },
                 new go.Binding("visible", field, val => val !== undefined)
@@ -130,16 +137,16 @@
                             $(go.TextBlock,
                                 {
                                     row: 0, alignment: go.Spot.Left,
-                                    font: "16px Roboto, sans-serif",
+                                    font: "14px Roboto, sans-serif",
                                     stroke: "rgba(0, 0, 0, .87)",
-                                    maxSize: new go.Size(160, NaN)
+                                    maxSize: new go.Size(220, NaN)
                                 },
                                 new go.Binding("text", "name")
                             ),
                             $(go.TextBlock, textStyle("title"),
                                 {
                                     row: 1, alignment: go.Spot.Left,
-                                    maxSize: new go.Size(160, NaN)
+                                    maxSize: new go.Size(180, NaN)
                                 },
                                 new go.Binding("text", "title")
                             ),
