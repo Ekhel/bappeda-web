@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
+{% load static %}
 
 <div class="hero-section app-hero">
     <div class="container">
@@ -9,12 +10,63 @@
                 <div class="col-md-10">
                     <h1 class="wow fadeInUp" data-wow-delay="0s">APPLIKASI</h1>
                     <p class="wow fadeInUp" data-wow-delay="0.2s">
-                        Aplikasi Perencanaan
+                        Aplikasi Perencanaan & Evaluasi
                     </p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="flex-features" id="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                <div class="card">
+                    <img class="card-img-top" src="{% static 'logos/app-sipd.png' %}" style="height:220px;">
+                    <div class="card-block">
+                        <figure class="profile">
+                            <img src="{% static 'logos/app-sipd.png' %}" class="profile-avatar" alt="">
+                        </figure>
+                        <h4 class="card-title mt-3">SIPD</h4>
+                        <div class="meta">
+                            <a>Perencanaan</a>
+                        </div>
+                        <div class="card-text">
+                            SISTEM INFORMASI PEMBANGUNAN DAERAH
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://jayapurakab.sipd.kemendagri.go.id/daerah"
+                            class="btn btn-secondary float-right btn-sm" title="Buka App"><i
+                                class="fa fa-folder"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                <div class="card">
+                    <img class="card-img-top" src="{% static 'logos/app-sickat.png' %}" style="height:220px;">
+                    <div class="card-block">
+                        <figure class="profile">
+                            <img src="{% static 'logos/app-sickat.png' %}" class="profile-avatar" alt="">
+                        </figure>
+                        <h4 class="card-title mt-3">SICKAT</h4>
+                        <div class="meta">
+                            <a>Evaluasi</a>
+                        </div>
+                        <div class="card-text">
+                            SISTEM IFORMASI CAPAIAN KINERJA TERPADU
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://sickat.net" class="btn btn-secondary float-right btn-sm" title="Buka App"><i
+                                class="fa fa-folder"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
