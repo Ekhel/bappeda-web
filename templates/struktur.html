@@ -1,0 +1,533 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="hero-section app-hero">
+    <div class="container">
+        <div class="hero-content app-hero-content text-center">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <h1 class="wow fadeInUp" data-wow-delay="0s">STRUKTUR</h1>
+                    <p class="wow fadeInUp" data-wow-delay="0.2s">
+                        STRUKTUR ORGANISASI BADAN PERENCANAAN PEMBANGUNAN DAERAH
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    #myOverviewDiv {
+        position: absolute;
+        width: 200px;
+        height: 100px;
+        top: 10px;
+        left: 10px;
+        background-color: #f2f2f2;
+        z-index: 300;
+        /* make sure its in front */
+        border: solid 1px #7986cb;
+    }
+</style>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css">
+
+<script id="code">
+    function init() {
+
+        // Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
+        // For details, see https://gojs.net/latest/intro/buildingObjects.html
+        const $ = go.GraphObject.make;  // for conciseness in defining templates
+
+        // some constants that will be reused within templates
+        var mt8 = new go.Margin(8, 0, 0, 0);
+        var mr8 = new go.Margin(0, 8, 0, 0);
+        var ml8 = new go.Margin(0, 0, 0, 8);
+        var roundedRectangleParams = {
+            parameter1: 2,  // set the rounded corner
+            spot1: go.Spot.TopLeft, spot2: go.Spot.BottomRight  // make content go all the way to inside edges of rounded corners
+        };
+
+        myDiagram =
+            $(go.Diagram, "myDiagramDiv",  // the DIV HTML element
+                {
+                    // Put the diagram contents at the top center of the viewport
+                    initialDocumentSpot: go.Spot.Top,
+                    initialViewportSpot: go.Spot.Top,
+                    // OR: Scroll to show a particular node, once the layout has determined where that node is
+                    // "InitialLayoutCompleted": e => {
+                    //  var node = e.diagram.findNodeForKey(28);
+                    //  if (node !== null) e.diagram.commandHandler.scrollToPart(node);
+                    // },
+                    layout:
+                        $(go.TreeLayout,  // use a TreeLayout to position all of the nodes
+                            {
+                                isOngoing: false,  // don't relayout when expanding/collapsing panels
+                                treeStyle: go.TreeLayout.StyleLastParents,
+                                // properties for most of the tree:
+                                angle: 90,
+                                layerSpacing: 80,
+                                // properties for the "last parents":
+                                alternateAngle: 0,
+                                alternateAlignment: go.TreeLayout.AlignmentStart,
+                                alternateNodeIndent: 15,
+                                alternateNodeIndentPastParent: 1,
+                                alternateNodeSpacing: 15,
+                                alternateLayerSpacing: 40,
+                                alternateLayerSpacingParentOverlap: 1,
+                                alternatePortSpot: new go.Spot(0.001, 1, 20, 0),
+                                alternateChildPortSpot: go.Spot.Left
+                            })
+                });
+
+        // This function provides a common style for most of the TextBlocks.
+        // Some of these values may be overridden in a particular TextBlock.
+        function textStyle(field) {
+            return [
+                {
+                    font: "8px Roboto, sans-serif", stroke: "rgba(0, 0, 0, .60)",
+                    visible: false  // only show textblocks when there is corresponding data for them
+                },
+                new go.Binding("visible", field, val => val !== undefined)
+            ];
+        }
+
+        // define Converters to be used for Bindings
+        function theNationFlagConverter(nation) {
+            return "https://www.nwoods.com/images/emojiflags/" + nation + ".png";
+        }
+
+        // define the Node template
+        myDiagram.nodeTemplate =
+            $(go.Node, "Auto",
+                {
+                    locationSpot: go.Spot.Top,
+                    isShadowed: true, shadowBlur: 1,
+                    shadowOffset: new go.Point(0, 1),
+                    shadowColor: "rgba(0, 0, 0, .14)",
+                    selectionAdornmentTemplate:  // selection adornment to match shape of nodes
+                        $(go.Adornment, "Auto",
+                            $(go.Shape, "RoundedRectangle", roundedRectangleParams,
+                                {fill: null, stroke: "#7986cb", strokeWidth: 3}
+                            ),
+                            $(go.Placeholder)
+                        )  // end Adornment
+                },
+                $(go.Shape, "RoundedRectangle", roundedRectangleParams,
+                    {name: "SHAPE", fill: "#ffffff", strokeWidth: 0},
+                    // gold if highlighted, white otherwise
+                    new go.Binding("fill", "isHighlighted", h => h ? "gold" : "#ffffff").ofObject()
+                ),
+                $(go.Panel, "Vertical",
+                    $(go.Panel, "Horizontal",
+                        {margin: 8},
+                        $(go.Picture,  // flag image, only visible if a nation is specified
+                            {margin: mr8, visible: false, desiredSize: new go.Size(50, 50)},
+                            new go.Binding("source", "nation", theNationFlagConverter),
+                            new go.Binding("visible", "nation", nat => nat !== undefined)
+                        ),
+                        $(go.Panel, "Table",
+                            $(go.TextBlock,
+                                {
+                                    row: 0, alignment: go.Spot.Left,
+                                    font: "16px Roboto, sans-serif",
+                                    stroke: "rgba(0, 0, 0, .87)",
+                                    maxSize: new go.Size(160, NaN)
+                                },
+                                new go.Binding("text", "name")
+                            ),
+                            $(go.TextBlock, textStyle("title"),
+                                {
+                                    row: 1, alignment: go.Spot.Left,
+                                    maxSize: new go.Size(160, NaN)
+                                },
+                                new go.Binding("text", "title")
+                            ),
+                            $("PanelExpanderButton", "INFO",
+                                {row: 0, column: 1, rowSpan: 2, margin: ml8}
+                            )
+                        )
+                    ),
+                    $(go.Shape, "LineH",
+                        {
+                            stroke: "rgba(0, 0, 0, .60)", strokeWidth: 1,
+                            height: 1, stretch: go.GraphObject.Horizontal
+                        },
+                        new go.Binding("visible").ofObject("INFO")  // only visible when info is expanded
+                    ),
+                    $(go.Panel, "Vertical",
+                        {
+                            name: "INFO",  // identify to the PanelExpanderButton
+                            stretch: go.GraphObject.Horizontal,  // take up whole available width
+                            margin: 8,
+                            defaultAlignment: go.Spot.Left,  // thus no need to specify alignment on each element
+                        },
+                        $(go.TextBlock, textStyle("headOf"),
+                            new go.Binding("text", "headOf", head => "Kantor: " + head)
+                        ),
+                        $(go.TextBlock, textStyle("boss"),
+                            new go.Binding("margin", "headOf", head => mt8), // some space above if there is also a headOf value
+                            new go.Binding("text", "boss", boss => {
+                                var boss = myDiagram.model.findNodeDataForKey(boss);
+                                if (boss !== null) {
+                                    return "Membantu: " + boss.name;
+                                }
+                                return "";
+                            })
+                        )
+                    )
+                )
+            );
+
+        // define the Link template, a simple orthogonal line
+        myDiagram.linkTemplate =
+            $(go.Link, go.Link.Orthogonal,
+                {corner: 5, selectable: false},
+                $(go.Shape, {strokeWidth: 3, stroke: "#424242"}));  // dark gray, rounded corner links
+
+
+        // set up the nodeDataArray, describing each person/position
+        var nodeDataArray = [
+            {
+                key: 0,
+                name: "PARSON HOROTA, Sos, M.Si",
+                title: "KEPALA",
+                headOf: "Badan Perencanaan Pembangunan Daerah"
+            },
+            {
+                key: 1,
+                boss: 0,
+                name: "LUCKMAN ENRICO.R, ST, MT",
+                title: "SEKRETARIS"
+            },
+            {
+                key: 3,
+                boss: 0,
+                name: "JOHN MANGGO, S.Pd",
+                title: "KEPALA BIDANG EKONOMI DAN PENANAMAN MODAL"
+            },
+            {
+                key: 4,
+                boss: 3,
+                name: "Melkyanus Wokman, SP",
+                title: "Kepala Sub. Bid. Pertanian, Perikanan & Perindakop"
+            },
+            {
+                key: 5,
+                boss: 3,
+                name: "Jemi Kamban, ST",
+                title: "Kepala Sub. Bid. Kebudayaan, Pariwisata, PDU & PMK"
+            },
+            {
+                key: 6,
+                boss: 0,
+                name: "HIJRAYANI, SE",
+                title: "KEPALA BIDANG SOSIAL BUDAYA"
+            },
+            {
+                key: 7,
+                boss: 6,
+                name: "Rita Juwita, SE",
+                title: "Kepala Sub. Bid. Pemerintahan dan Kependudukan"
+            },
+            {
+                key: 8,
+                boss: 6,
+                name: "Kosmas Haay",
+                title: "Kepala Sub. Bid. Pendikpora dan Kesra"
+            },
+            {
+                key: 9,
+                boss: 0,
+                name: "BAMBANG HANDOKO",
+                title: "KEPALA BIDANG FISIK DAN PRASARANA"
+            },
+            {
+                key: 10,
+                boss: 9,
+                name: "Martha Ch. Yufuay, S.Hut",
+                title: "Kepala Sub Bid. TR dan Tata Guna Tanah & Perhubungan"
+            },
+            {
+                key: 11,
+                boss: 9,
+                name: "E r w i n, ST",
+                title: "Kepala Sub Bid. Penaataan Lingkungan, SDA, LH, & Pengairan"
+            },
+            {
+                key: 12,
+                boss: 0,
+                name: "VICTOR R. SERONDANYA, SE",
+                title: "KEPALA BIDANG PENGENDALIAN DAN PELAPORAN"
+            },
+            {
+                key: 13,
+                boss: 12,
+                name: "Melkyanus E. Yembise, SE",
+                title: "Kepala Sub Bid. Pengendalian dan Pelaporan"
+            },
+            {
+                key: 14,
+                boss: 12,
+                name: "Santi E. Situmorang, SP",
+                title: "Kepala Sub Bid. Analissa Penilaian dan Pelaporan"
+            },
+            {
+                key: 15,
+                boss: 1,
+                name: "Metty I.T Palintin, SE",
+                title: "Kepala Sub Bag. Keuangan dan Aset"
+            },
+            {
+                key: 16,
+                boss: 1,
+                name: "Moses Worumi, ST",
+                title: "Kepala Sub Bag. Kepegawaian"
+            },
+            {
+                key: 17,
+                boss: 1,
+                name: "Elisabeth Karma, S.Hut",
+                title: "Kepala Sub Bag. Umum dan Program"
+            },
+            {
+                key: 18,
+                boss: 15,
+                name: "Hafsah Diyali",
+                title: "Bendahara Pengeluaran"
+            },
+            {
+                key: 19,
+                boss: 15,
+                name: "M a s n i, SE",
+                title: "Pelaksana"
+            },
+            {
+                key: 20,
+                boss: 15,
+                name: "Rudi Rumayomi, S.IP",
+                title: "Pengurus Barang"
+            },
+            {
+                key: 31,
+                boss: 15,
+                name: "Sisilia D Sapranim, SE",
+                title: "Pelaksana"
+            },
+            {
+                key: 21,
+                boss: 16,
+                name: "Krista Imelda Apaseray",
+                title: "Pelaksana"
+            },
+            {
+                key: 22,
+                boss: 16,
+                name: "Alegro Bulero Muabuay",
+                title: "Pelaksana"
+            },
+            {
+                key: 23,
+                boss: 16,
+                name: "Tineke Okoka",
+                title: "Pelaksana"
+            },
+            {
+                key: 24,
+                boss: 16,
+                name: "Regina Mahuse",
+                title: "Pelaksana"
+            },
+            {
+                key: 25,
+                boss: 17,
+                name: "Patricia Napo",
+                title: "Pelaksana"
+            },
+            {
+                key: 26,
+                boss: 17,
+                name: "Victor E. Zai, S.Kom",
+                title: "Pelaksana"
+            },
+            {
+                key: 27,
+                boss: 17,
+                name: "Dicky A. Sahertian, S.Kom",
+                title: "Pelaksana"
+            },
+            {
+                key: 33,
+                boss: 17,
+                name: "Fablo Pardomuan Silalahi",
+                title: "Pelaksana"
+            },
+            {
+                key: 39,
+                boss: 17,
+                name: "Chevin O. Hikoyabi, S.IP",
+                title: "Pelaksana"
+            },
+            {
+                key: 28,
+                boss: 13,
+                name: "Irma Sangean Bauw",
+                title: "Pelaksana"
+            },
+            {
+                key: 29,
+                boss: 14,
+                name: "Obeth Gibson Imbiri, ST",
+                title: "Pelaksana"
+            },
+            {
+                key: 30,
+                boss: 13,
+                name: "Irwan Ferry Kasimat, ST",
+                title: "Pelaksana"
+            },
+            {
+                key: 29,
+                boss: 14,
+                name: "Budi Handoko",
+                title: "Pelaksana"
+            },
+            {
+                key: 29,
+                boss: 13,
+                name: "Livia Hikoyabi, S.Kep",
+                title: "Pelaksana"
+            },
+            {
+                key: 32,
+                boss: 7,
+                name: "Koitafina Jatusari",
+                title: "Pelaksana"
+            },
+            {
+                key: 41,
+                boss: 7,
+                name: "Sigrid B. Triputra",
+                title: "Pelaksana"
+            },
+            {
+                key: 33,
+                boss: 8,
+                name: "Hanna Hamadi",
+                title: "Pelaksana"
+            },
+            {
+                key: 42,
+                boss: 8,
+                name: "Taufik Amir, ST",
+                title: "Pelaksana"
+            },
+            {
+                key: 34,
+                boss: 5,
+                name: "Martha Kossi, SH",
+                title: "Pelaksana"
+            },
+            {
+                key: 35,
+                boss: 5,
+                name: "Federika Kabuaya",
+                title: "Pelaksana"
+            },
+            {
+                key: 36,
+                boss: 4,
+                name: "Frits Miamin Eybe",
+                title: "Pelaksana"
+            },
+            {
+                key: 37,
+                boss: 4,
+                name: "Hillary Fitle",
+                title: "Pelaksana"
+            },
+            {
+                key: 38,
+                boss: 5,
+                name: "Fidel Pepuho",
+                title: "Pelaksana"
+            },
+            {
+                key: 40,
+                boss: 10,
+                name: "Maria Wally, BIT",
+                title: "Pelaksana"
+            },
+            {
+                key: 40,
+                boss: 11,
+                name: "Daniel Rumbobiar",
+                title: "Pelaksana"
+            },
+        ];
+
+        // create the Model with data for the tree, and assign to the Diagram
+        myDiagram.model =
+            new go.TreeModel(
+                {
+                    nodeParentKeyProperty: "boss",  // this property refers to the parent node data
+                    nodeDataArray: nodeDataArray
+                });
+
+        // Overview
+        myOverview =
+            $(go.Overview, "myOverviewDiv",  // the HTML DIV element for the Overview
+                {observed: myDiagram, contentAlignment: go.Spot.Center});   // tell it which Diagram to show and pan
+    }
+
+    // the Search functionality highlights all of the nodes that have at least one data property match a RegExp
+    function searchDiagram() {  // called by button
+        var input = document.getElementById("mySearch");
+        if (!input) return;
+        myDiagram.focus();
+
+        myDiagram.startTransaction("highlight search");
+
+        if (input.value) {
+            // search four different data properties for the string, any of which may match for success
+            // create a case insensitive RegExp from what the user typed
+            var safe = input.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            var regex = new RegExp(safe, "i");
+            var results = myDiagram.findNodesByExample({name: regex},
+                {nation: regex},
+                {title: regex},
+                {headOf: regex});
+            myDiagram.highlightCollection(results);
+            // try to center the diagram at the first node that was found
+            if (results.count > 0) myDiagram.centerRect(results.first().actualBounds);
+        } else {  // empty string only clears highlighteds collection
+            myDiagram.clearHighlighteds();
+        }
+
+        myDiagram.commitTransaction("highlight search");
+    }
+    window.addEventListener('DOMContentLoaded', init);
+</script>
+
+<div class="flex-features" id="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="sample" style="position: relative;">
+                    <div id="myDiagramDiv"
+                        style="background-color: #f2f2f2; border: solid 1px black; width: 100%; height: 700px">
+                    </div>
+                    <div id="myOverviewDiv">
+
+                    </div>
+                    <input type="search" class="form-control" id="mySearch"
+                        onkeypress="if (event.keyCode === 13) searchDiagram()" />
+                    <button onclick="searchDiagram()">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

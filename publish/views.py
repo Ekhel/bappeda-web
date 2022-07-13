@@ -27,3 +27,15 @@ def applikasi(request):
     context = {'title': 'Bappeda | Aplikasi'}
 
     return render(request, 'app.html', context)
+
+
+# def struktur(request):
+#     context = {'title': 'Bappeda | Struktur Organisasi'}
+
+#     return render(request, 'nodedata.html', context)
+
+
+def organisasi(request):
+    context = {'title': 'Bappeda | Struktur Organisasi'}
+
+    return render(request, 'struktur.html', context)
