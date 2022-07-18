@@ -26,7 +26,7 @@ def produk(request, pk):
 def applikasi(request):
     context = {'title': 'Bappeda | Aplikasi'}
 
-    return render(request, 'app.html', context)
+    return render(request, 'app2.html', context)
 
 
 # def struktur(request):

@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="hero-section app-hero">
+    <div class="container">
+        <div class="hero-content app-hero-content text-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'beranda' %}">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="#">Aplikasi</a>
+                    </li>
+                </ol>
+            </nav>
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <h1 class="wow fadeInUp" data-wow-delay="0s">APPLIKASI</h1>
+                    <p class="wow fadeInUp" data-wow-delay="0.2s">
+                        Aplikasi Perencanaan, Evaluasi, & Data
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-block-grey">
+    <div class="container">
+        <div class="row mt-60">
+            <div class="col-md-4 col-sm-12 col-12">
+                <div class="serv-section-2">
+                    <div class="serv-section-2-icon"> <i class="fas fa-gem"></i> </div>
+                    <div class="serv-section-desc">
+                        <h4>Planning</h4>
+                        <a href="https://jayapurakab.sipd.kemendagri.go.id/daerah" target="_blank">
+                            <h5>Sistem Informasi Pembangunan Daerah (SIPD)
+                        </a></h5>
+                    </div>
+                    <div class="section-heading-line-left"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-12">
+                <div class="serv-section-2 serv-section-2-act">
+                    <div class="serv-section-2-icon serv-section-2-icon-act"> <i class="fas fa-cogs"></i> </div>
+                    <div class="serv-section-desc">
+                        <h4>Evaluasi</h4>
+                        <a href="https://sickat.net" target="_blank">
+                            <h5>Sistem Informasi Capian Kinerja Tepadu (SICKAT)
+                        </a></h5>
+                    </div>
+                    <div class="section-heading-line-left"></div>
+
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-12">
+                <div class="serv-section-2">
+                    <div class="serv-section-2-icon"> <i class="fas fa-signature"></i> </div>
+                    <div class="serv-section-desc">
+                        <h4>Data</h4>
+                        <a href="https://siopapua.com" target="_blank">
+                            <h5>Sismtem Informasi Orang Asli Papua (SIO PAPUA)
+                        </a></h5>
+                    </div>
+                    <div class="section-heading-line-left"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
