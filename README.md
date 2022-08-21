@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/Ekhel/bappeda-web/blob/master/static/images/repo/bappedarepo.png" width="600px" /></p>
+<p align="center"><img src="https://github.com/Ekhel/bappeda-web/blob/main/static/images/repo/bappedarepo.png" width="600px" /></p>
 
 
 - Bahasa :
