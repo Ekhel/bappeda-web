@@ -14,9 +14,6 @@
   - SQLLite
   - Postgre
 
-- HOST
+===
 
-  - [Heroku](https://bappedaweb.herokuapp.com)
-
----
 
