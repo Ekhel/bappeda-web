@@ -15,7 +15,8 @@ SECRET_KEY = 'django-insecure-homuv#oum)&omgclf97^a*-)k$+0$xfbrzx()0o09@j4=zg&6(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bappedaweb.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['bappedaweb.herokuapp.com',
+                 'bappeda.jayapurakab.go.id', '127.0.0.1']
 
 
 # Application definition
